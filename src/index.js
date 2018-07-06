@@ -8,8 +8,6 @@
 "use strict";
 
 var stripAnsi = require("strip-ansi");
-// var url = require("url");
-// var launchEditorEndpoint = require("./launchEditorEndpoint");
 var formatWebpackMessages = require("../lib/formatWebpackMessages");
 var ErrorOverlay = require("react-error-overlay");
 

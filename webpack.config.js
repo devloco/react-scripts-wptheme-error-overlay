@@ -12,7 +12,7 @@ module.exports = {
     mode: "development",
     entry: "./src/index.js",
     output: {
-        path: path.join(__dirname, ""),
+        path: __dirname,
         filename: "wptheme-error-overlay.js",
         library: "wpthemeErrorOverlay",
         libraryTarget: "umd"
