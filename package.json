@@ -1,0 +1,33 @@
+{
+    "name": "@devloco/react-scripts-wptheme-error-overlay",
+    "version": "0.0.1",
+    "description": "create-react-wptheme client with error overlay",
+    "main": "wptheme-error-overlay.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "devloco",
+    "license": "MIT",
+    "files": [
+        "wptheme-error-overlay.js"
+    ],
+    "devDependencies": {
+        "babel-code-frame": "^6.26.0",
+        "babel-core": "^6.26.3",
+        "babel-loader": "^7.1.5",
+        "babel-preset-react-app": "^3.1.2",
+        "babel-runtime": "^6.26.0",
+        "chalk": "^2.4.1",
+        "chokidar": "^2.0.4",
+        "cross-env": "^5.0.5",
+        "html-entities": "^1.2.1",
+        "raw-loader": "^0.5.1",
+        "react": "^16.4.1",
+        "react-dom": "^16.4.1",
+        "react-error-overlay": "^4.0.0",
+        "webpack": "^4.15.1",
+        "webpack-cli": "^3.0.8",
+        "strip-ansi": "^4.0.0",
+        "shell-quote": "^1.6.1"
+    }
+}
