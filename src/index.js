@@ -11,9 +11,24 @@ var stripAnsi = require("strip-ansi");
 var formatWebpackMessages = require("../lib/formatWebpackMessages");
 var ErrorOverlay = require("react-error-overlay");
 
+// We need to keep track of if there has been a runtime error.
+// Essentially, we cannot guarantee application state was not corrupted by the
+// runtime error. To prevent confusing behavior, we forcibly reload the entire
+// application. This is handled below when we are notified of a compile (code
+// change).
+// See https://github.com/facebookincubator/create-react-app/issues/3096
+var hadRuntimeError = false;
+ErrorOverlay.startReportingRuntimeErrors({
+    onError: function() {
+        hadRuntimeError = true;
+    },
+    filename: "/static/js/bundle.js"
+});
+
 // Remember some state related to hot module replacement.
-// var isFirstCompilation = true;
-// var hasCompileErrors = false;
+var isFirstCompilation = true;
+var mostRecentCompilationHash = null;
+var hasCompileErrors = false;
 
 export function clearOutdatedErrors() {
     // Clean up outdated compile errors, if any.
@@ -28,16 +43,16 @@ export function handleSuccess() {
     // Successful compilation.
     clearOutdatedErrors();
 
-    // isFirstCompilation = false;
-    // hasCompileErrors = false;
+    isFirstCompilation = false;
+    hasCompileErrors = false;
 }
 
 export function handleWarnings(warnings) {
     clearOutdatedErrors();
 
     // var isHotUpdate = !isFirstCompilation;
-    // isFirstCompilation = false;
-    // hasCompileErrors = false;
+    isFirstCompilation = false;
+    hasCompileErrors = false;
 
     function printWarnings() {
         // Print warnings to the console.
@@ -58,28 +73,14 @@ export function handleWarnings(warnings) {
         }
     }
 
-    // // Attempt to apply hot updates or reload.
-    // if (isHotUpdate) {
-    //     tryApplyUpdates(function onSuccessfulHotUpdate() {
-    //         // Only print warnings if we aren't refreshing the page.
-    //         // Otherwise they'll disappear right away anyway.
-    //         printWarnings();
-    //         // Only dismiss it when we're sure it's a hot update.
-    //         // Otherwise it would flicker right before the reload.
-    //         ErrorOverlay.dismissBuildError();
-    //     });
-    // } else {
-    //     // Print initial warnings immediately.
-    //     printWarnings();
-    // }
     printWarnings();
 }
 
 export function handleErrors(errors) {
     clearOutdatedErrors();
 
-    // isFirstCompilation = false;
-    // hasCompileErrors = true;
+    isFirstCompilation = false;
+    hasCompileErrors = true;
 
     // "Massage" webpack messages.
     var formatted = formatWebpackMessages({
