@@ -9,7 +9,7 @@
     "author": "devloco",
     "license": "MIT",
     "files": [
-        "wptheme-error-overlay.js"
+        "wpThemeErrorOverlay.js"
     ],
     "devDependencies": {
         "babel-code-frame": "^6.26.0",
