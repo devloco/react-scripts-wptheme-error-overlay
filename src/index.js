@@ -30,25 +30,23 @@ var isFirstCompilation = true;
 var mostRecentCompilationHash = null;
 var hasCompileErrors = false;
 
-export function clearOutdatedErrors() {
+export function clearConsole() {
     // Clean up outdated compile errors, if any.
     if (typeof console !== "undefined" && typeof console.clear === "function") {
-        if (hasCompileErrors) {
-            console.clear();
-        }
+        console.clear();
     }
 }
 
 export function handleSuccess() {
     // Successful compilation.
-    clearOutdatedErrors();
+    clearConsole();
 
     isFirstCompilation = false;
     hasCompileErrors = false;
 }
 
 export function handleWarnings(warnings) {
-    clearOutdatedErrors();
+    clearConsole();
 
     // var isHotUpdate = !isFirstCompilation;
     isFirstCompilation = false;
@@ -77,7 +75,7 @@ export function handleWarnings(warnings) {
 }
 
 export function handleErrors(errors) {
-    clearOutdatedErrors();
+    clearConsole();
 
     isFirstCompilation = false;
     hasCompileErrors = true;
