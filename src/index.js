@@ -28,23 +28,16 @@ var isFirstCompilation = true;
 var mostRecentCompilationHash = null;
 var hasCompileErrors = false;
 
-// export function clearConsole() {
-//     // Clean up outdated compile errors, if any.
-//     if (typeof console !== "undefined" && typeof console.clear === "function") {
-//         console.clear();
-//     }
-// }
-
 export function handleSuccess() {
     // Successful compilation.
-    ErrorOverlay.clearConsole(); // clearConsole();
+    ErrorOverlay.clearConsole();
 
     isFirstCompilation = false;
     hasCompileErrors = false;
 }
 
 export function handleWarnings(warnings) {
-    ErrorOverlay.clearConsole(); // clearConsole();
+    ErrorOverlay.clearConsole();
 
     // var isHotUpdate = !isFirstCompilation;
     isFirstCompilation = false;
@@ -64,7 +57,6 @@ export function handleWarnings(warnings) {
                     break;
                 }
 
-                // console.warn(ErrorOverlay.stripAnsi(formatted.warnings[i]));
                 ErrorOverlay.console.warn(ErrorOverlay.stripAnsi(formatted.warnings[i]));
             }
         }
@@ -74,7 +66,7 @@ export function handleWarnings(warnings) {
 }
 
 export function handleErrors(errors) {
-    ErrorOverlay.clearConsole(); // clearConsole();
+    ErrorOverlay.clearConsole();
 
     isFirstCompilation = false;
     hasCompileErrors = true;
@@ -91,7 +83,6 @@ export function handleErrors(errors) {
     // Also log them to the console.
     if (typeof console !== "undefined" && typeof console.error === "function") {
         for (var i = 0; i < formatted.errors.length; i++) {
-            // console.error(ErrorOverlay.stripAnsi(formatted.errors[i]));
             ErrorOverlay.console.error(ErrorOverlay.stripAnsi(formatted.errors[i]));
         }
     }
