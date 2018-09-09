@@ -10,5 +10,4 @@ lerna-debug.log
 npm-debug.log*
 yarn*
 /.changelog
-wptheme-error-overlay.js
 wpThemeErrorOverlay.js

@@ -7,8 +7,6 @@
 
 "use strict";
 
-var stripAnsi = require("strip-ansi");
-var formatWebpackMessages = require("../lib/formatWebpackMessages");
 var ErrorOverlay = require("react-error-overlay");
 
 // We need to keep track of if there has been a runtime error.
@@ -30,23 +28,23 @@ var isFirstCompilation = true;
 var mostRecentCompilationHash = null;
 var hasCompileErrors = false;
 
-export function clearConsole() {
-    // Clean up outdated compile errors, if any.
-    if (typeof console !== "undefined" && typeof console.clear === "function") {
-        console.clear();
-    }
-}
+// export function clearConsole() {
+//     // Clean up outdated compile errors, if any.
+//     if (typeof console !== "undefined" && typeof console.clear === "function") {
+//         console.clear();
+//     }
+// }
 
 export function handleSuccess() {
     // Successful compilation.
-    clearConsole();
+    ErrorOverlay.clearConsole(); // clearConsole();
 
     isFirstCompilation = false;
     hasCompileErrors = false;
 }
 
 export function handleWarnings(warnings) {
-    clearConsole();
+    ErrorOverlay.clearConsole(); // clearConsole();
 
     // var isHotUpdate = !isFirstCompilation;
     isFirstCompilation = false;
@@ -54,7 +52,7 @@ export function handleWarnings(warnings) {
 
     function printWarnings() {
         // Print warnings to the console.
-        var formatted = formatWebpackMessages({
+        var formatted = ErrorOverlay.formatWebpackMessages({
             warnings: warnings,
             errors: []
         });
@@ -66,7 +64,8 @@ export function handleWarnings(warnings) {
                     break;
                 }
 
-                console.warn(stripAnsi(formatted.warnings[i]));
+                // console.warn(ErrorOverlay.stripAnsi(formatted.warnings[i]));
+                ErrorOverlay.console.warn(ErrorOverlay.stripAnsi(formatted.warnings[i]));
             }
         }
     }
@@ -75,13 +74,13 @@ export function handleWarnings(warnings) {
 }
 
 export function handleErrors(errors) {
-    clearConsole();
+    ErrorOverlay.clearConsole(); // clearConsole();
 
     isFirstCompilation = false;
     hasCompileErrors = true;
 
-    // "Massage" webpack messages.
-    var formatted = formatWebpackMessages({
+    // Format webpack messages.
+    var formatted = ErrorOverlay.formatWebpackMessages({
         errors: errors,
         warnings: []
     });
@@ -92,7 +91,8 @@ export function handleErrors(errors) {
     // Also log them to the console.
     if (typeof console !== "undefined" && typeof console.error === "function") {
         for (var i = 0; i < formatted.errors.length; i++) {
-            console.error(stripAnsi(formatted.errors[i]));
+            // console.error(ErrorOverlay.stripAnsi(formatted.errors[i]));
+            ErrorOverlay.console.error(ErrorOverlay.stripAnsi(formatted.errors[i]));
         }
     }
 
