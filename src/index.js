@@ -7,7 +7,10 @@
 
 "use strict";
 
+var stripAnsi = require("strip-ansi");
+// var formatWebpackMessages = require("../lib/formatWebpackMessages");
 var ErrorOverlay = require("react-error-overlay");
+var formatWebpackMessages = require("../node_modules/react-dev-utils/formatWebpackMessages");
 
 // We need to keep track of if there has been a runtime error.
 // Essentially, we cannot guarantee application state was not corrupted by the
@@ -28,16 +31,23 @@ var isFirstCompilation = true;
 var mostRecentCompilationHash = null;
 var hasCompileErrors = false;
 
+export function clearConsole() {
+    // Clean up outdated compile errors, if any.
+    if (typeof console !== "undefined" && typeof console.clear === "function") {
+        console.clear();
+    }
+}
+
 export function handleSuccess() {
     // Successful compilation.
-    ErrorOverlay.clearConsole();
+    clearConsole();
 
     isFirstCompilation = false;
     hasCompileErrors = false;
 }
 
 export function handleWarnings(warnings) {
-    ErrorOverlay.clearConsole();
+    clearConsole();
 
     // var isHotUpdate = !isFirstCompilation;
     isFirstCompilation = false;
@@ -45,7 +55,7 @@ export function handleWarnings(warnings) {
 
     function printWarnings() {
         // Print warnings to the console.
-        var formatted = ErrorOverlay.formatWebpackMessages({
+        var formatted = formatWebpackMessages({
             warnings: warnings,
             errors: []
         });
@@ -57,7 +67,7 @@ export function handleWarnings(warnings) {
                     break;
                 }
 
-                ErrorOverlay.console.warn(ErrorOverlay.stripAnsi(formatted.warnings[i]));
+                console.warn(stripAnsi(formatted.warnings[i]));
             }
         }
     }
@@ -66,13 +76,13 @@ export function handleWarnings(warnings) {
 }
 
 export function handleErrors(errors) {
-    ErrorOverlay.clearConsole();
+    clearConsole();
 
     isFirstCompilation = false;
     hasCompileErrors = true;
 
     // Format webpack messages.
-    var formatted = ErrorOverlay.formatWebpackMessages({
+    var formatted = formatWebpackMessages({
         errors: errors,
         warnings: []
     });
@@ -83,7 +93,7 @@ export function handleErrors(errors) {
     // Also log them to the console.
     if (typeof console !== "undefined" && typeof console.error === "function") {
         for (var i = 0; i < formatted.errors.length; i++) {
-            ErrorOverlay.console.error(ErrorOverlay.stripAnsi(formatted.errors[i]));
+            console.error(stripAnsi(formatted.errors[i]));
         }
     }
 
