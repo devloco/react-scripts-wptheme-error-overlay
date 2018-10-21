@@ -8,7 +8,6 @@
 "use strict";
 
 var stripAnsi = require("strip-ansi");
-// var formatWebpackMessages = require("../lib/formatWebpackMessages");
 var ErrorOverlay = require("react-error-overlay");
 var formatWebpackMessages = require("../node_modules/react-dev-utils/formatWebpackMessages");
 
@@ -87,13 +86,21 @@ export function handleErrors(errors) {
         warnings: []
     });
 
-    // Only show the first error.
-    ErrorOverlay.reportBuildError(formatted.errors[0]);
+    if (Array.isArray(formatted.errors) && formatted.errors.length > 0) {
+        // Only show the first error.
+        ErrorOverlay.reportBuildError(formatted.errors[0]);
 
-    // Also log them to the console.
-    if (typeof console !== "undefined" && typeof console.error === "function") {
-        for (var i = 0; i < formatted.errors.length; i++) {
-            console.error(stripAnsi(formatted.errors[i]));
+        // Log additional errors to the console.
+        if (typeof console !== "undefined" && typeof console.error === "function" && formatted.errors.length > 1) {
+            console.error("The browser is only showing the first error.");
+            console.error("ADDITIONAL ERRORS LISTED HERE");
+            for (var i = 0; i < formatted.errors.length; i++) {
+                console.error(stripAnsi(formatted.errors[i]));
+            }
+        }
+    } else {
+        if (typeof console !== "undefined" && typeof console.error === "function") {
+            console.error("UNKNOWN ERROR from react-scripts-wptheme-error-overlay:handleErrors:", errors);
         }
     }
 
