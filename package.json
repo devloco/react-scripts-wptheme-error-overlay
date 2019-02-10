@@ -17,7 +17,6 @@
       "wpThemeErrorOverlay.js"
   ],
   "dependencies": {
-      "ajv": "6.8.1",
       "react-dev-utils": "7.0.1",
       "react-error-overlay": "5.1.2"
   },
