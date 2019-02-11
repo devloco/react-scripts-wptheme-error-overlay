@@ -11,6 +11,11 @@ var stripAnsi = require("strip-ansi");
 var ErrorOverlay = require("react-error-overlay");
 var formatWebpackMessages = require("../node_modules/react-dev-utils/formatWebpackMessages");
 
+// Remember some state related to hot module replacement.
+var isFirstCompilation = true;
+var mostRecentCompilationHash = null;
+var hasCompileErrors = false;
+
 // We need to keep track of if there has been a runtime error.
 // Essentially, we cannot guarantee application state was not corrupted by the
 // runtime error. To prevent confusing behavior, we forcibly reload the entire
@@ -18,17 +23,50 @@ var formatWebpackMessages = require("../node_modules/react-dev-utils/formatWebpa
 // change).
 // See https://github.com/facebookincubator/create-react-app/issues/3096
 var hadRuntimeError = false;
-ErrorOverlay.startReportingRuntimeErrors({
+var runtimeOptions = {
     onError: function() {
         hadRuntimeError = true;
     },
     filename: "/static/js/bundle.js"
-});
+};
+ErrorOverlay.startReportingRuntimeErrors(runtimeOptions);
 
-// Remember some state related to hot module replacement.
-var isFirstCompilation = true;
-var mostRecentCompilationHash = null;
-var hasCompileErrors = false;
+var theErrorDiv = null;
+window.addEventListener("error", (error) => {
+    if (hadRuntimeError === false) {
+        var propError = error.error;
+        var newError = {
+            code: parseInt(propError.code, 10) || propError.code,
+            columnNumber: parseInt(propError.columnNumber, 10) || propError.columnNumber,
+            data: propError.data,
+            filename: propError.filename
+                .toString()
+                .replace("webpack-internal:///", "")
+                .replace("./", "./react-src/"),
+            lineNumber: parseInt(propError.lineNumber, 10) || propError.lineNumber,
+            message: propError.message.toString(),
+            name: propError.name.toString(),
+            result: parseInt(propError.result, 10) || propError.result,
+            stack: propError.stack.toString()
+        };
+
+        const appDocument = window.document;
+
+        if (theErrorDiv === null) {
+            clearConsole();
+            theErrorDiv = appDocument.createElement("div");
+            theErrorDiv.innerHTML = "";
+        }
+
+        const errorDiv = theErrorDiv;
+        var inClause = `${newError.name} in ${newError.filename}`;
+        if (errorDiv.innerHTML.indexOf(inClause) === -1) {
+            errorDiv.innerHTML += `<br /><div style="margin-left:1rem;">${inClause} <i style="font-weight:bold;color:red">${newError.message}</i><br/>(see the JS error console for the full error)</div>`;
+        }
+
+        appDocument.body.appendChild(errorDiv);
+    }
+});
 
 export function clearConsole() {
     // Clean up outdated compile errors, if any.
@@ -40,9 +78,9 @@ export function clearConsole() {
 export function handleSuccess() {
     // Successful compilation.
     clearConsole();
-
     isFirstCompilation = false;
     hasCompileErrors = false;
+    hadRuntimeError = false;
 }
 
 export function handleWarnings(warnings) {
