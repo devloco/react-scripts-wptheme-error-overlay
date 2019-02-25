@@ -1,32 +1,33 @@
 {
-  "name": "@devloco/react-scripts-wptheme-error-overlay",
-  "version": "1.4.1",
-  "description": "create-react-wptheme client with error overlay",
-  "main": "wptheme-error-overlay.js",
-  "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "devloco",
-  "license": "MIT",
-  "homepage": "https://github.com/devloco/create-react-wptheme",
-  "repository": {
-      "type": "git",
-      "url": "git+https://github.com/devloco/react-scripts-wptheme-error-overlay.git"
-  },
-  "files": [
-      "wpThemeErrorOverlay.js"
-  ],
-  "dependencies": {
-      "react-dev-utils": "7.0.3",
-      "react-error-overlay": "5.1.3"
-  },
-  "devDependencies": {
-      "@babel/code-frame": "7.0.0",
-      "@babel/core": "7.2.2",
-      "@webpack-cli/info": "^0.1.3",
-      "babel-core": "7.0.0-bridge.0",
-      "babel-loader": "8.0.5",
-      "webpack": "4.29.3",
-      "webpack-cli": "3.2.3"
-  }
+    "name": "@devloco/react-scripts-wptheme-error-overlay",
+    "version": "1.4.2",
+    "description": "create-react-wptheme client with error overlay",
+    "main": "wptheme-error-overlay.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "devloco",
+    "license": "MIT",
+    "homepage": "https://github.com/devloco/create-react-wptheme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/devloco/react-scripts-wptheme-error-overlay.git"
+    },
+    "files": [
+        "wpThemeErrorOverlay.js"
+    ],
+    "dependencies": {
+        "ajv": "^6.8.1",
+        "react-dev-utils": "7.0.3",
+        "react-error-overlay": "5.1.3"
+    },
+    "devDependencies": {
+        "@babel/code-frame": "7.0.0",
+        "@babel/core": "7.2.2",
+        "@webpack-cli/info": "^0.1.3",
+        "babel-core": "7.0.0-bridge.0",
+        "babel-loader": "8.0.5",
+        "webpack": "4.29.3",
+        "webpack-cli": "3.2.3"
+    }
 }
