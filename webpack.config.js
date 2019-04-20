@@ -9,7 +9,7 @@
 const path = require("path");
 
 module.exports = {
-    mode: "production",
+    mode: "none",
     entry: path.join(__dirname, "src", "index.js"),
     watch: true,
     watchOptions: {

@@ -31,43 +31,6 @@ var runtimeOptions = {
 };
 ErrorOverlay.startReportingRuntimeErrors(runtimeOptions);
 
-//var theErrorDiv = null;
-// window.addEventListener("error", (error) => {
-//     if (hadRuntimeError === false) {
-//         var propError = error.error;
-//         var newError = {
-//             code: parseInt(propError.code, 10) || propError.code,
-//             columnNumber: parseInt(propError.columnNumber, 10) || propError.columnNumber,
-//             data: propError.data,
-//             filename: propError.filename
-//                 .toString()
-//                 .replace("webpack-internal:///", "")
-//                 .replace("./", "./react-src/"),
-//             lineNumber: parseInt(propError.lineNumber, 10) || propError.lineNumber,
-//             message: propError.message.toString(),
-//             name: propError.name.toString(),
-//             result: parseInt(propError.result, 10) || propError.result,
-//             stack: propError.stack.toString()
-//         };
-
-//         const appDocument = window.document;
-
-//         if (theErrorDiv === null) {
-//             clearConsole();
-//             theErrorDiv = appDocument.createElement("div");
-//             theErrorDiv.innerHTML = "";
-//         }
-
-//         const errorDiv = theErrorDiv;
-//         var inClause = `${newError.name} in ${newError.filename}`;
-//         if (errorDiv.innerHTML.indexOf(inClause) === -1) {
-//             errorDiv.innerHTML += `<br /><div style="margin-left:1rem;">${inClause} <i style="font-weight:bold;color:red">${newError.message}</i><br/>(see the JS error console for the full error)</div>`;
-//         }
-
-//         appDocument.body.appendChild(errorDiv);
-//     }
-// });
-
 export function clearConsole() {
     // Clean up outdated compile errors, if any.
     if (typeof console !== "undefined" && typeof console.clear === "function") {
@@ -84,7 +47,7 @@ export function handleSuccess() {
 }
 
 export function handleWarnings(warnings) {
-    clearConsole();
+    //clearConsole();
 
     // var isHotUpdate = !isFirstCompilation;
     isFirstCompilation = false;
@@ -113,7 +76,7 @@ export function handleWarnings(warnings) {
 }
 
 export function handleErrors(errors) {
-    clearConsole();
+    //clearConsole();
 
     isFirstCompilation = false;
     hasCompileErrors = true;
@@ -127,15 +90,6 @@ export function handleErrors(errors) {
     if (Array.isArray(formatted.errors) && formatted.errors.length > 0) {
         // Only show the first error.
         ErrorOverlay.reportBuildError(formatted.errors[0]);
-
-        // Log additional errors to the console.
-        if (typeof console !== "undefined" && typeof console.error === "function" && formatted.errors.length > 1) {
-            console.error("The browser is only showing the first error.");
-            console.error("ADDITIONAL ERRORS LISTED HERE");
-            for (var i = 0; i < formatted.errors.length; i++) {
-                console.error(stripAnsi(formatted.errors[i]));
-            }
-        }
     } else {
         if (typeof console !== "undefined" && typeof console.error === "function") {
             console.error("UNKNOWN ERROR from react-scripts-wptheme-error-overlay:handleErrors:", errors);
