@@ -9,7 +9,7 @@
 
 var stripAnsi = require("strip-ansi");
 var ErrorOverlay = require("react-error-overlay");
-var formatWebpackMessages = require("../node_modules/react-dev-utils/formatWebpackMessages");
+var formatWebpackMessages = require("react-dev-utils/formatWebpackMessages");
 
 // Remember some state related to hot module replacement.
 var isFirstCompilation = true;
