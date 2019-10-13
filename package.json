@@ -1,6 +1,6 @@
 {
     "name": "@devloco/react-scripts-wptheme-error-overlay",
-    "version": "6.0.301",
+    "version": "6.0.3-wp.1",
     "description": "create-react-wptheme client with error overlay",
     "main": "wptheme-error-overlay.js",
     "scripts": {
